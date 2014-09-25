@@ -112,6 +112,8 @@ func textDecode(parameterStatus *parameterStatus, s []byte, typ oid.Oid) interfa
 			errorf("%s", err)
 		}
 		return f
+	case oid.T_varchar, oid.T_text:
+		return string(s)
 	}
 
 	return s
