@@ -350,6 +350,21 @@ func TestTextOutput(t *testing.T) {
 	}
 }
 
+func TestNumericOutput(t *testing.T) {
+	db := openTestConn(t)
+	defer db.Close()
+
+	var result interface{}
+	err := db.QueryRow("SELECT 0.1::numeric").Scan(&result)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if _, ok := result.(float64); !ok {
+		t.Errorf("unexpected data type output: %T", result)
+	}
+}
+
 func TestAppendEncodedText(t *testing.T) {
 	var buf []byte
 
